@@ -12,16 +12,26 @@
     <form id="create-task-form" action="#" method="post">
       <label for="new-task-description">Task description:</label>
       <input type="text" id="new-task-description" name="new-task-description" placeholder="description">
+
+      <!-- <select name="color">
+       <h2><option value="red">red</option></h2> 
+        <h3><option value="yellow">yellow</option></h3>
+        <h4><option value="green">green</option></h4>
+      </select> -->
+
       <input type="submit" value="Create New Task">
     </form>
 
+    
     <div id="list">
       <h2>My Todos</h2>
       <ul id="tasks">
       </ul>
     </div>
-
+    
     <script src="./src/index.js"></script>
+    <script src="./src/taskList.js"></script>
+    <script src="./src/taskListItem.js"></script>
   </div>
 
 </body>
