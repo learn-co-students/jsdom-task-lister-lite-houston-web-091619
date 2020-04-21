@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     allTask = document.querySelectorAll('#myTask')
     newArrTasks = [] // this will store the elements from allTask in an array. Reason I'm doing this is to go around the arrraylike varible allTask and turn it into an array
-                     // this may seem a bit weird but it's to bypass the issue I have using sort method
+                     // this may seem a bit weird but it's to bypass the issue of me using sort method
     for(let i= 0; i < allTask.length; i++){
       newArrTasks.push(allTask[i])
     }
