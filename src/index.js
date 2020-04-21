@@ -67,7 +67,6 @@ const rmAllTask = (ul) => {
 }
 
 const setValue = (task) => {
-  console.log(task)
   if(task.style.color === 'red'){
     return 3
   }else if(task.style.color === 'orange'){
