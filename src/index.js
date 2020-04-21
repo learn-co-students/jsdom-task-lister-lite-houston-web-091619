@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addDropDown(formTask)
 
-
-
   addTask.addEventListener("submit", () => {
     event.preventDefault() //prevents this event from going off, unless it's actaully being used
     const ul = document.querySelector('#tasks') // This picks out the tag with the id name 'task'
@@ -17,42 +15,66 @@ document.addEventListener("DOMContentLoaded", () => {
     const li = document.createElement('li')
     const rm = document.createElement('button')
     li.id = 'myTask'
-    li.innerText = event.target[0].value //takes the value from the text box
+    li.innerText = event.target[0].value //takes the value from the text box andf makes it the text for the li tag
     li.style.color = event.target[2].value //grabs the current selected value in the dropdown box
-    rm.innerText = 'x' //labels the btn as x
+    rm.innerText = 'x'
 
     rmTask(li,rm)
 
-    li.append(rm) //adds the btn to in th eli tag
+    li.append(rm) //adds the btn to in the li tag
     ul.append(li) //adds the newly made li tag to the ul tag
-
-    sortTask(ul)
     
-    event.target.reset() // lears the text box after sumbit
+    allTask = document.querySelectorAll('#myTask')
+    newArrTasks = [] // this will store the elements from allTask in an array. Reason I'm doing this is to go around the arrraylike varible allTask and turn it into an array
+                     // this may seem a bit weird but it's to bypass the issue I have using sort method
+    for(let i= 0; i < allTask.length; i++){
+      newArrTasks.push(allTask[i])
+    }
+
+    sortedAllTask = newArrTasks.sort(function(a, b) { return setValue(b) - setValue(a) } )
+
+    rmAllTask(ul)
+    addSortedTasks(sortedAllTask, ul)
+
+    event.target.reset() // resets all the events
   })
 });
 
-const sortTask = (ul) => {
-    // document.getElementById("mySelect").childNodes[2]
-  const allTask = ul.childNodes
-  const lowP = []
-  const midP = []
-  const highP = []
-  let i;
-  for (i = 1; i < allTask.length; i++) {
-    if(allTask[i].style.cssText === "color: green;"){
-      lowP.push(allTask[i])
-    } else if(allTask[i].style.cssText === "color: orange;"){
-      midP.push(allTask[i])
-    }else{
-      highP.push(allTask[i])
-    }
+const addSortedTasks = (taskArr, ul) => {
+  for (let i = 0; i < taskArr.length; i++){
+    createSortedTask(taskArr[i], ul)
   }
-  // arr1.concat(arr2)
-  console.log(highP)
-  
-  // ul.childNodes.remove()
-  // ul.childNodes = allTask
+}
+
+const createSortedTask = (task, ul) => {
+  const li = document.createElement('li')
+  const rm = document.createElement('button')
+  li.id = 'myTask'
+  li.innerText = task.innerText 
+  li.style.color = task.style.color 
+  rm.innerText = 'x'
+
+  rmTask(li,rm)
+
+  li.append(rm)
+  ul.append(li)
+}
+
+const rmAllTask = (ul) => {
+  while(ul.firstChild){
+    ul.removeChild(ul.lastChild)
+  }
+}
+
+const setValue = (task) => {
+  console.log(task)
+  if(task.style.color === 'red'){
+    return 3
+  }else if(task.style.color === 'orange'){
+    return 2
+  }else if(task.style.color === 'green'){
+    return 1
+  }
 }
 
 const addDropDown = (formTask) => {
@@ -82,34 +104,3 @@ const rmTask = (li,rm) => {
     li.remove()
   })
 }
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   //grab all the necessary DOM elements
-
-//   //form and relevant input fields
-//   const newTaskForm = document.getElementById("create-task-form");
-//   const newTaskDescription = document.getElementById("new-task-description");
-//   const newTaskPriority = document.getElementById("new-task-priority");
-
-//   //ul where new tasks will live on the DOM
-//   const newTaskUl = document.getElementById("tasks");
-
-//   //attach event listeners
-//   newTaskForm.addEventListener("submit", createNewTask);
-// });
-
-// const createNewTask = event => {
-//   event.preventDefault();
-//   //stop form from trying to submit
-//   const newTaskDescription = document.getElementById("new-task-description");
-//   const newTask = document.createElement("li");
-//   newTask.innerText = newTaskDescription.value;
-
-//   appendNewTask(newTask);
-//   event.target.reset();
-// };
-
-// const appendNewTask = task => {
-//   document.getElementById("tasks").appendChild(task);
-// };
